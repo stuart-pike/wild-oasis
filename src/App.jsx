@@ -16,11 +16,13 @@ import AppLayout from "./ui/AppLayout";
 import Settings from "./pages/Settings";
 import Booking from "./pages/Booking";
 import Checkin from "./pages/Checkin";
+import ProtectedRoute from "./ui/ProtectedRoute";
 
 //setup cache
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
+      // one minute
       staleTime: 60 * 1000,
     },
   },
@@ -35,7 +37,13 @@ function App() {
         <GlobalStyles />
         <BrowserRouter>
           <Routes>
-            <Route element={<AppLayout />}>
+            <Route
+              element={
+                <ProtectedRoute>
+                  <AppLayout />
+                </ProtectedRoute>
+              }
+            >
               <Route index element={<Navigate replace to="dashboard" />} />
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="bookings" element={<Bookings />} />
